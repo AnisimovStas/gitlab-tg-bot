@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: tgbot.gitlab
+
+bot:
+  name: gitlabEcovisionBot
+  token: 7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
