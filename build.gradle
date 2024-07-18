@@ -41,8 +41,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    implementation 'org.telegram:telegrambots-springboot-longpolling-starter:7.7.1'
-    implementation 'org.telegram:telegrambots-client:7.7.1'
+    implementation 'org.telegram:telegrambots:6.9.7.1'
 
     implementation 'com.github.gitlab4j:gitlab4j-api:6.x-SNAPSHOT'
 
