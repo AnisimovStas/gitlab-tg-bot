@@ -48,13 +48,17 @@ public class GenerateReportProcessor implements CallbackQueryProcessor {
 
         String report = reportService.processMrListToReport(releaseMrs, projectName);
 
+        //-100 + chat id
+//        Long chatId = -100217XXX195L;
 
         return List.of(SendMessage
-                .builder()
-                .chatId(userId)
-                .text(report)
-                .parseMode("html")
-                .build()
+                        .builder()
+                        .chatId(userId)
+//                .chatId(chatId)
+//                .messageThreadId(2)
+                        .text(report)
+                        .parseMode("html")
+                        .build()
         );
     }
 
