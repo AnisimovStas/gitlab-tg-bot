@@ -31,8 +31,8 @@ repositories {
         name = "EcovisionNexus"
         url = uri('https://dev.ecovisio.ru/nexus/repository/maven-ecovision-private')
         credentials {
-            username = System.getenv("NEXUS_USR")
-            password = System.getenv("NEXUS_PSW")
+            username = "nx-ecovision-admin"
+            password = "7gEKRbefbYugEDFhvnJo"
         }
     }
 
@@ -44,6 +44,10 @@ dependencies {
     implementation 'org.telegram:telegrambots:6.9.7.1'
 
     implementation 'com.github.gitlab4j:gitlab4j-api:6.x-SNAPSHOT'
+
+    // нужно для фикса бага связанного с gitlab4j
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
 
     implementation 'ru.aph-ecoculture.tgbot:commons:0.0.1'
 

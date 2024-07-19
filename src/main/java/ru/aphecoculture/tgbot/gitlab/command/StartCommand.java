@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.aphecoculture.ecovision.tgbot.commons.command.Command;
+import ru.aphecoculture.tgbot.gitlab.ui.markup.MainMenuMarkup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class StartCommand implements Command {
 
     public static final String START_COMMAND = "/start";
- 
+
     //TODO написать нормальный интро текст
     public static final String INTRO = """
             Привет!
@@ -34,7 +35,7 @@ public class StartCommand implements Command {
         List<BotApiMethod> messages = new ArrayList<>();
         Long chatId = update.getMessage().getChatId();
 
-        messages.add(SendMessage.builder().text(INTRO).chatId(chatId).build());
+        messages.add(SendMessage.builder().text(INTRO).replyMarkup(MainMenuMarkup.MARKUP).chatId(chatId).build());
 
         return messages;
     }
