@@ -2,9 +2,8 @@ package ru.aphecoculture.tgbot.gitlab.handler.callbackquerydataprocessor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.gitlab4j.api.models.MergeRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -16,6 +15,7 @@ import ru.aphecoculture.ecovision.tgbot.commons.callbackquery.CallbackQueryProce
 import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.service.GitlabService;
 import ru.aphecoculture.tgbot.gitlab.service.ReportService;
+import ru.aphecoculture.tgbot.gitlab.utils.CallbackDataUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +23,9 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class GenerateReportProcessor implements CallbackQueryProcessor {
 
-    private static final Logger log = LoggerFactory.getLogger(GenerateReportProcessor.class);
     @Autowired
     ReportService reportService;
 
@@ -42,27 +42,27 @@ public class GenerateReportProcessor implements CallbackQueryProcessor {
     public List<BotApiMethod> processCallbackQuery(CallbackQuery callbackQuery) {
         Long userId = callbackQuery.getFrom().getId();
         String data = callbackQuery.getData();
-        Long projectId = reportService.getProjectIdFromCallback(data);
-        Long fromMRId = reportService.getFromMRIdFromCallback(data);
-        Long toMRId = reportService.getToMRIdFromCallback(data);
+        Long projectId = CallbackDataUtils.getProjectIdFromCallback(data);
+        Long fromMRId = CallbackDataUtils.getFromMRIdFromCallback(data);
+        Long toMRId = CallbackDataUtils.getToMRIdFromCallback(data);
 
         List<MergeRequest> releaseMrs = gitlabService.getRangeOfMRs(projectId, fromMRId, toMRId);
-
 
         Optional<GitlabProject> project = gitlabService.getProjectById(projectId);
 
         if (project.isEmpty()) {
+            //TODO Убрать RuntimeException
             throw new RuntimeException();
         }
 
         String reportData = reportService.processMrListToReport(releaseMrs, project.get().getName());
 
         Integer reportId = reportService.addReport(reportData);
-         
+
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         InlineKeyboardButton button = new InlineKeyboardButton();
         button.setText("Отправить сообщение о релизе в группу");
-        button.setCallbackData("send_to_group_reportId_%d_topicId_%d".formatted(reportId, project.get().getTopicId()));
+        button.setCallbackData("send_to_group_reportId_%d_projectId_%d".formatted(reportId, project.get().getId()));
         keyboard.add(List.of(button));
 
 

@@ -14,7 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import ru.aphecoculture.ecovision.tgbot.commons.callbackquery.CallbackQueryProcessor;
 import ru.aphecoculture.ecovision.tgbot.commons.exception.BotApplicationException;
 import ru.aphecoculture.tgbot.gitlab.service.GitlabService;
-import ru.aphecoculture.tgbot.gitlab.service.ReportService;
+import ru.aphecoculture.tgbot.gitlab.utils.CallbackDataUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +27,6 @@ public class SelectProjectProcessor implements CallbackQueryProcessor {
     @Autowired
     GitlabService gitlabService;
 
-    @Autowired
-    ReportService reportService;
 
     @Override
     public boolean doesProcess(CallbackQuery callbackQuery) {
@@ -40,7 +38,7 @@ public class SelectProjectProcessor implements CallbackQueryProcessor {
     public List<BotApiMethod> processCallbackQuery(CallbackQuery callbackQuery) throws BotApplicationException {
         Long userId = callbackQuery.getFrom().getId();
         String data = callbackQuery.getData();
-        Long projectId = reportService.getProjectIdFromCallback(data);
+        Long projectId = CallbackDataUtils.getProjectIdFromCallback(data);
 
         List<MergeRequest> releaseMRs = gitlabService.getLatestRelease(projectId);
 

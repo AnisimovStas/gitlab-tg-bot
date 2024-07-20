@@ -33,21 +33,7 @@ public class ReportService {
         return reportRepository.getById(id);
     }
 
-    public Long getProjectIdFromCallback(String callback) {
-        String fieldValue = getFieldFromCallback(callback, "projectId");
-        return Long.parseLong(fieldValue);
-    }
-
-    public Long getFromMRIdFromCallback(String callback) {
-        String fieldValue = getFieldFromCallback(callback, "fromMRId");
-        return Long.parseLong(fieldValue);
-    }
-
-    public Long getToMRIdFromCallback(String callback) {
-        String fieldValue = getFieldFromCallback(callback, "toMRId");
-        return Long.parseLong(fieldValue);
-    }
-
+ 
     public String processMrListToReport(List<MergeRequest> mrs, String projectName) {
         String releaseTitle = processReportTitle(mrs.getFirst().getTitle(), projectName);
 
@@ -109,19 +95,6 @@ public class ReportService {
         return section.toString();
     }
 
-    private String getFieldFromCallback(String callback, String field) {
-        String[] parts = callback.split("_");
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i].equals(field)) {
-                if (i < parts.length - 1) {
-                    return parts[i + 1];
-                } else {
-                    return null; // if field is found but there is no next part
-                }
-            }
-        }
-        return null; // if field is not found
-    }
 
     private String processReportTitle(String mrTitle, String projectName) {
         String trimmedMrTitle = trimPrefix(mrTitle);
