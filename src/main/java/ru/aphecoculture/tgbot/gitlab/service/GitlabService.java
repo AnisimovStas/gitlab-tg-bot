@@ -7,12 +7,15 @@ import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
 import org.gitlab4j.api.models.MergeRequestFilter;
-import org.gitlab4j.api.models.Project;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
+import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -20,19 +23,21 @@ public class GitlabService {
 
     GitLabApi gitLabApi;
 
+    @Autowired
+    GitlabProjectCacheRepository projects;
+
 
     GitlabService(@Value("${gitlab.url}") String gitlabUrl, @Value("${gitlab.token}") String gitlabToken) {
         this.gitLabApi = new GitLabApi(gitlabUrl, gitlabToken);
     }
 
-    public List<Project> getAllProjects() throws GitLabApiException {
-        return gitLabApi.getProjectApi().getProjects();
+    public List<GitlabProject> getAllProjects() {
+        return projects.getAll();
     }
 
     @SneakyThrows
-    public String getProjectNameByProjectId(Long projectId) {
-
-        return gitLabApi.getProjectApi().getProject(projectId).getName();
+    public Optional<GitlabProject> getProjectById(Long projectId) {
+        return projects.getById(projectId);
     }
 
     public List<MergeRequest> getLatestRelease(Long projectId) throws GitLabApiException {

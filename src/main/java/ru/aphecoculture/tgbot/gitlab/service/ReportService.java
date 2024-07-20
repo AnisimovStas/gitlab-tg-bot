@@ -1,13 +1,12 @@
 package ru.aphecoculture.tgbot.gitlab.service;
 
 import org.gitlab4j.api.models.MergeRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.aphecoculture.tgbot.gitlab.repository.ReportRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,9 +16,21 @@ public class ReportService {
     private final String gitlabInstance;
     private final String gitlabURL;
 
-    ReportService(@Value("${gitlab.instance}") String gitlabInstance, @Value("${gitlab.url}") String gitlabURL) {
+    @Autowired
+    private final ReportRepository reportRepository;
+
+    ReportService(@Value("${gitlab.instance}") String gitlabInstance, @Value("${gitlab.url}") String gitlabURL, ReportRepository reportRepository) {
         this.gitlabInstance = gitlabInstance;
         this.gitlabURL = gitlabURL;
+        this.reportRepository = reportRepository;
+    }
+
+    public Integer addReport(String reportData) {
+        return reportRepository.addReport(reportData);
+    }
+
+    public Optional<String> getReportDataById(Integer id) {
+        return reportRepository.getById(id);
     }
 
     public Long getProjectIdFromCallback(String callback) {

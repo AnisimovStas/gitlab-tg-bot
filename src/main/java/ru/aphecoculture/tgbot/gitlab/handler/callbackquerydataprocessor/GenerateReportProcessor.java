@@ -10,11 +10,16 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.aphecoculture.ecovision.tgbot.commons.callbackquery.CallbackQueryProcessor;
+import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.service.GitlabService;
 import ru.aphecoculture.tgbot.gitlab.service.ReportService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -44,21 +49,34 @@ public class GenerateReportProcessor implements CallbackQueryProcessor {
         List<MergeRequest> releaseMrs = gitlabService.getRangeOfMRs(projectId, fromMRId, toMRId);
 
 
-        String projectName = gitlabService.getProjectNameByProjectId(projectId);
+        Optional<GitlabProject> project = gitlabService.getProjectById(projectId);
 
-        String report = reportService.processMrListToReport(releaseMrs, projectName);
+        if (project.isEmpty()) {
+            throw new RuntimeException();
+        }
 
-        //-100 + chat id
-//        Long chatId = -100217XXX195L;
+        String reportData = reportService.processMrListToReport(releaseMrs, project.get().getName());
+
+        Integer reportId = reportService.addReport(reportData);
+         
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        InlineKeyboardButton button = new InlineKeyboardButton();
+        button.setText("Отправить сообщение о релизе в группу");
+        button.setCallbackData("send_to_group_reportId_%d_topicId_%d".formatted(reportId, project.get().getTopicId()));
+        keyboard.add(List.of(button));
+
 
         return List.of(SendMessage
-                        .builder()
-                        .chatId(userId)
-//                .chatId(chatId)
-//                .messageThreadId(2)
-                        .text(report)
-                        .parseMode("html")
-                        .build()
+                .builder()
+                .chatId(userId)
+                .text(reportData)
+                .replyMarkup(
+                        InlineKeyboardMarkup.builder()
+                                .keyboard(keyboard)
+                                .build()
+                )
+                .parseMode("html")
+                .build()
         );
     }
 

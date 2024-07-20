@@ -2,7 +2,6 @@ package ru.aphecoculture.tgbot.gitlab.handler.strategy;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.gitlab4j.api.models.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -12,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.aphecoculture.ecovision.tgbot.commons.update.strategy.UpdateStrategy;
+import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.service.GitlabService;
 
 import java.util.ArrayList;
@@ -54,10 +54,10 @@ public class CreateReleaseNoteStrategy implements UpdateStrategy {
         String responseText = "Выберите проект для которого нужно сформировать релиз";
 
 
-        List<Project> projects = gitlabService.getAllProjects();
+        List<GitlabProject> projects = gitlabService.getAllProjects();
 
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        for (Project project : projects) {
+        for (GitlabProject project : projects) {
             InlineKeyboardButton button = new InlineKeyboardButton();
             button.setText(project.getName());
             button.setCallbackData("select_projectId_%s".formatted(project.getId()));
