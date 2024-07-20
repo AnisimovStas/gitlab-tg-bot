@@ -60,10 +60,17 @@ public class GenerateReportProcessor implements CallbackQueryProcessor {
         Integer reportId = reportService.addReport(reportData);
 
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        InlineKeyboardButton button = new InlineKeyboardButton();
-        button.setText("Отправить сообщение о релизе в группу");
-        button.setCallbackData("send_to_group_reportId_%d_projectId_%d".formatted(reportId, project.get().getId()));
-        keyboard.add(List.of(button));
+        InlineKeyboardButton sendToGroupButton = new InlineKeyboardButton();
+        sendToGroupButton.setText("Отправить сообщение о релизе в группу");
+        sendToGroupButton.setCallbackData("send_to_group_reportId_%d_projectId_%d".formatted(reportId, project.get().getId()));
+
+        InlineKeyboardButton createWikiButton = new InlineKeyboardButton();
+        createWikiButton.setText("Создать страницу на вики");
+        createWikiButton.setCallbackData("create_wiki_page_reportId_%d_projectId_%d".formatted(reportId, project.get().getId()));
+
+
+        keyboard.add(List.of(sendToGroupButton));
+        keyboard.add(List.of(createWikiButton));
 
 
         return List.of(SendMessage

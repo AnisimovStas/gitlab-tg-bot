@@ -21,14 +21,24 @@ import java.util.Optional;
 @Slf4j
 public class GitlabService {
 
+    private final String gitlabURL;
+    private final String gitlabToken;
+    private final String gitlabInstance;
+
     GitLabApi gitLabApi;
 
     @Autowired
     GitlabProjectCacheRepository projects;
 
 
-    GitlabService(@Value("${gitlab.url}") String gitlabUrl, @Value("${gitlab.token}") String gitlabToken) {
-        this.gitLabApi = new GitLabApi(gitlabUrl, gitlabToken);
+    GitlabService(@Value("${gitlab.url}") String gitlabUrl,
+                  @Value("${gitlab.token}") String gitlabToken,
+                  @Value("${gitlab.instance}") String gitlabInstance
+    ) {
+        this.gitlabURL = gitlabUrl;
+        this.gitlabToken = gitlabToken;
+        this.gitlabInstance = gitlabInstance;
+        this.gitLabApi = new GitLabApi(this.gitlabURL, this.gitlabToken);
     }
 
     public List<GitlabProject> getAllProjects() {
@@ -41,8 +51,6 @@ public class GitlabService {
     }
 
     public List<MergeRequest> getLatestRelease(Long projectId) throws GitLabApiException {
-
-        log.info("starting fetching latestRelease");
         MergeRequestFilter mergeRequestFilter = new MergeRequestFilter();
         mergeRequestFilter.setProjectId(projectId);
         mergeRequestFilter.setState(Constants.MergeRequestState.MERGED);
@@ -65,4 +73,18 @@ public class GitlabService {
         return gitLabApi.getMergeRequestApi().getMergeRequests(mergeRequestFilter);
     }
 
+    @SneakyThrows
+    public String createWikiPage(Long projectId, String title, String content) {
+        gitLabApi.getWikisApi().createPage(projectId, title, content);
+
+        Optional<GitlabProject> project = this.getProjectById(projectId);
+        if (project.isEmpty()) {
+            throw new RuntimeException();
+        }
+        String projectNameInLink = project.get().getName().replaceAll("\\s", "-");
+        String titleInLink = title.replaceAll("\\s", "-");
+
+        return this.gitlabURL + "/" + this.gitlabInstance + "/" + projectNameInLink + "/-/wikis/" + titleInLink;
+
+    }
 }
