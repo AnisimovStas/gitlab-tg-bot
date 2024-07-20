@@ -8,8 +8,8 @@ import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
 import org.gitlab4j.api.models.MergeRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.aphecoculture.tgbot.gitlab.config.properties.GitlabProperties;
 import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
 
@@ -21,24 +21,17 @@ import java.util.Optional;
 @Slf4j
 public class GitlabService {
 
-    private final String gitlabURL;
-    private final String gitlabToken;
-    private final String gitlabInstance;
+    private final GitlabProperties gitlabProperties;
 
-    GitLabApi gitLabApi;
+    private final GitLabApi gitLabApi;
 
     @Autowired
     GitlabProjectCacheRepository projects;
 
 
-    GitlabService(@Value("${gitlab.url}") String gitlabUrl,
-                  @Value("${gitlab.token}") String gitlabToken,
-                  @Value("${gitlab.instance}") String gitlabInstance
-    ) {
-        this.gitlabURL = gitlabUrl;
-        this.gitlabToken = gitlabToken;
-        this.gitlabInstance = gitlabInstance;
-        this.gitLabApi = new GitLabApi(this.gitlabURL, this.gitlabToken);
+    GitlabService(GitlabProperties properties) {
+        this.gitlabProperties = properties;
+        this.gitLabApi = new GitLabApi(gitlabProperties.url(), gitlabProperties.token());
     }
 
     public List<GitlabProject> getAllProjects() {
@@ -84,7 +77,7 @@ public class GitlabService {
         String projectNameInLink = project.get().getName().replaceAll("\\s", "-");
         String titleInLink = title.replaceAll("\\s", "-");
 
-        return this.gitlabURL + "/" + this.gitlabInstance + "/" + projectNameInLink + "/-/wikis/" + titleInLink;
+        return this.gitlabProperties.url() + "/" + this.gitlabProperties.instance() + "/" + projectNameInLink + "/-/wikis/" + titleInLink;
 
     }
 }

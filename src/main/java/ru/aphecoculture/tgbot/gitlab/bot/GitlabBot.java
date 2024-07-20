@@ -49,36 +49,6 @@ public class GitlabBot extends TelegramLongPollingBot {
         });
     }
 
-
-//        // We check if the update has a message and the message has text
-//        if (update.hasMessage() && update.getMessage().hasText()) {
-//            // Set variables
-//            String message_text = update.getMessage().getText();
-//            long chat_id = update.getMessage().getChatId();
-//
-//            GitLabApi gitLabApi = new GitLabApi(gitlabURL, gitlabToken);
-//            try {
-//                List<Project> projects = gitLabApi.getProjectApi().getProjects();
-//                for (Project project : projects) {
-//                    message_text += project.getName() + "\n";
-//                }
-//            } catch (Exception e) {
-//                log.error(e.getMessage());
-//            }
-//
-//            SendMessage message = SendMessage // Create a message object
-//                    .builder()
-//                    .chatId(chat_id)
-//                    .text(message_text)
-//                    .build();
-//            try {
-//                telegramClient.execute(message); // Sending our message object to user
-//            } catch (TelegramApiException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-
     @Override
     public String getBotUsername() {
         return properties.botName();

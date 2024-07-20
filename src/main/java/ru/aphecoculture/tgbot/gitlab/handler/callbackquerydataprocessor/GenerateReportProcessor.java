@@ -16,6 +16,7 @@ import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.service.GitlabService;
 import ru.aphecoculture.tgbot.gitlab.service.ReportService;
 import ru.aphecoculture.tgbot.gitlab.utils.CallbackDataUtils;
+import ru.aphecoculture.tgbot.gitlab.utils.ReportUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +55,8 @@ public class GenerateReportProcessor implements CallbackQueryProcessor {
             //TODO Убрать RuntimeException
             throw new RuntimeException();
         }
-
-        String reportData = reportService.processMrListToReport(releaseMrs, project.get().getName());
+ 
+        String reportData = ReportUtils.processMrListToReport(releaseMrs, project.get().getName());
 
         Integer reportId = reportService.addReport(reportData);
 

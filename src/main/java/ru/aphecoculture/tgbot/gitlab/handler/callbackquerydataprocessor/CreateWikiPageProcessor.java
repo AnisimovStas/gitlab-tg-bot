@@ -15,8 +15,9 @@ import ru.aphecoculture.tgbot.gitlab.utils.CallbackDataUtils;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static ru.aphecoculture.tgbot.gitlab.utils.WikiPageUtils.processPageContent;
+import static ru.aphecoculture.tgbot.gitlab.utils.WikiPageUtils.processPageTitle;
 
 @Component
 @RequiredArgsConstructor
@@ -49,12 +50,11 @@ public class CreateWikiPageProcessor implements CallbackQueryProcessor {
             throw new RuntimeException();
         }
 
-
         String pageTitle = processPageTitle(reportData.get());
         String pageContent = processPageContent(reportData.get());
 
         String link = gitlabService.createWikiPage(projectId, pageTitle, pageContent);
- 
+
         String messageText = "Создана страница на wiki: <a href=\"%s\">%s</a>".formatted(link, pageTitle);
 
         return List.of(SendMessage
@@ -64,35 +64,5 @@ public class CreateWikiPageProcessor implements CallbackQueryProcessor {
                 .parseMode("html")
                 .build()
         );
-    }
-
-    private String processPageContent(String report) {
-        String trimmedReport = removeFirstTwoLines(report);
-        return addLineBreaks(trimmedReport);
-    }
-
-
-    private String processPageTitle(String report) {
-        String pattern = "<b><i>(.*?)</i></b>";
-        Pattern r = Pattern.compile(pattern);
-        Matcher m = r.matcher(report);
-        if (m.find()) {
-            return m.group(1);
-        } else {
-            return "";
-        }
-    }
-
-    private String addLineBreaks(String input) {
-        return input.replaceAll("\\n", "<br>");
-    }
-
-    private String removeFirstTwoLines(String input) {
-        String[] lines = input.split("\\r?\\n");
-        StringBuilder result = new StringBuilder();
-        for (int i = 2; i < lines.length; i++) {
-            result.append(lines[i]).append("\n");
-        }
-        return result.toString().trim();
     }
 }

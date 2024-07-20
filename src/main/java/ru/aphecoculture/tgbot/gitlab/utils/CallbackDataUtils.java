@@ -1,10 +1,6 @@
 package ru.aphecoculture.tgbot.gitlab.utils;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class CallbackDataUtils {
-
 
     private static String getFieldFromCallback(String callback, String field) {
         String[] parts = callback.split("_");
