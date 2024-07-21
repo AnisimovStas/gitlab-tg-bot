@@ -32,7 +32,7 @@ class StartCommandTest {
     void execute() {
         Update update = mockUpdateWithMessage();
         List<BotApiMethod> messages = command.execute(update);
-
+ 
         assertIterableEquals(
                 List.of(SendMessage.builder().chatId(TELEGRAM_ID).text(INTRO).replyMarkup(MainMenuMarkup.MARKUP).build()),
                 messages

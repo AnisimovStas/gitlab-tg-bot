@@ -16,7 +16,6 @@ import java.util.List;
 public class StartCommand implements Command {
 
     public static final String START_COMMAND = "/start";
-
     //TODO написать нормальный интро текст
     public static final String INTRO = """
             Привет!

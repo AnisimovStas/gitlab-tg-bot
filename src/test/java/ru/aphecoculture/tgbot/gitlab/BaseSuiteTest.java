@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import ru.aphecoculture.tgbot.gitlab.config.properties.GitlabBotProperties;
+import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,6 +26,7 @@ public class BaseSuiteTest {
     public static final int MESSAGE_ID = 1;
 
     public static final Long TELEGRAM_ID = 1L;
+    public static final Long TOPIC_ID = 1L;
 
     public static Update mockUpdateWithMessage() {
         Update update = mock(Update.class);
@@ -55,6 +57,10 @@ public class BaseSuiteTest {
         when(callbackQuery.getData()).thenReturn(data);
 
         return callbackQuery;
+    }
+
+    public static GitlabProject getDefaultProject() {
+        return GitlabProject.builder().chatId(TELEGRAM_ID).id(1L).name("ECOVISION").lastMRId(null).topicId(TOPIC_ID).build();
     }
 
 }
