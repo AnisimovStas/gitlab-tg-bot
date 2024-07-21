@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.aphecoculture.tgbot.gitlab.cache.GitlabProjectCache;
 import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
+import ru.aphecoculture.tgbot.gitlab.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,5 +26,21 @@ public class GitlabProjectCacheRepository {
 
     public void addProject(GitlabProject project) {
         projects.put(project.getId(), project);
+    }
+
+    public void save(GitlabProject project) {
+        projects.put(project.getId(), project);
+    }
+
+    public List<String> getUsersTelegramUsernameExceptMRCreator(Long projectId, String gitlabUsername) {
+        List<User> users = projects.get(projectId).getUsers();
+        List<String> result = new ArrayList<>();
+
+        for (User user : users) {
+            if (!user.getGitlabUsername().equals(gitlabUsername)) {
+                result.add(user.getTelegramUsername());
+            }
+        }
+        return result;
     }
 }

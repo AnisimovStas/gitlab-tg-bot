@@ -78,6 +78,18 @@ public class GitlabService {
         String titleInLink = title.replaceAll("\\s", "-");
 
         return this.gitlabProperties.url() + "/" + this.gitlabProperties.instance() + "/" + projectNameInLink + "/-/wikis/" + titleInLink;
+    }
 
+    @SneakyThrows
+    public MergeRequest getLastCreatedMergeRequest(Long projectId) {
+        log.info("fetching last created mrs for projectId: {}", projectId);
+        MergeRequestFilter mergeRequestFilter = new MergeRequestFilter();
+        mergeRequestFilter.setProjectId(projectId);
+        mergeRequestFilter.setState(Constants.MergeRequestState.OPENED);
+        List<MergeRequest> mrs = gitLabApi.getMergeRequestApi().getMergeRequests(mergeRequestFilter, 1).all();
+        if (mrs.isEmpty()) {
+            return null;
+        }
+        return mrs.getFirst();
     }
 }

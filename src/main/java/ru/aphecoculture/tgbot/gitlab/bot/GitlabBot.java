@@ -1,6 +1,7 @@
 package ru.aphecoculture.tgbot.gitlab.bot;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -9,6 +10,7 @@ import ru.aphecoculture.ecovision.tgbot.commons.exception.BotException;
 import ru.aphecoculture.ecovision.tgbot.commons.exception.UpdateHandlerException;
 import ru.aphecoculture.ecovision.tgbot.commons.update.handler.UpdateHandler;
 import ru.aphecoculture.tgbot.gitlab.config.properties.GitlabBotProperties;
+import ru.aphecoculture.tgbot.gitlab.handler.scheduled.SchedulerChecker;
 
 import java.util.List;
 
@@ -18,12 +20,14 @@ public class GitlabBot extends TelegramLongPollingBot {
 
     private final GitlabBotProperties properties;
     private final UpdateHandler updateHandler;
+    private final SchedulerChecker schedulerChecker;
 
 
-    public GitlabBot(GitlabBotProperties properties, UpdateHandler updateHandler) {
+    public GitlabBot(GitlabBotProperties properties, UpdateHandler updateHandler, SchedulerChecker schedulerChecker) {
         super(properties.botToken());
         this.properties = properties;
         this.updateHandler = updateHandler;
+        this.schedulerChecker = schedulerChecker;
     }
 
 
@@ -48,6 +52,23 @@ public class GitlabBot extends TelegramLongPollingBot {
             }
         });
     }
+
+    @Scheduled(fixedRate = 5000)
+    private void scheduledMessages() {
+        List<BotApiMethod> responseMessages = schedulerChecker.scheduledHandler();
+
+        responseMessages.forEach(message -> {
+            try {
+                execute(message);
+
+            } catch (TelegramApiException e) {
+                throw new BotException(e);
+            }
+        });
+
+
+    }
+
 
     @Override
     public String getBotUsername() {
