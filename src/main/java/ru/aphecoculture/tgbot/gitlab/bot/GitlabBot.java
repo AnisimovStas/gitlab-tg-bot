@@ -10,7 +10,7 @@ import ru.aphecoculture.ecovision.tgbot.commons.exception.BotException;
 import ru.aphecoculture.ecovision.tgbot.commons.exception.UpdateHandlerException;
 import ru.aphecoculture.ecovision.tgbot.commons.update.handler.UpdateHandler;
 import ru.aphecoculture.tgbot.gitlab.config.properties.GitlabBotProperties;
-import ru.aphecoculture.tgbot.gitlab.handler.scheduled.SchedulerChecker;
+import ru.aphecoculture.tgbot.gitlab.sheduler.SchedulerHandler;
 
 import java.util.List;
 
@@ -20,14 +20,13 @@ public class GitlabBot extends TelegramLongPollingBot {
 
     private final GitlabBotProperties properties;
     private final UpdateHandler updateHandler;
-    private final SchedulerChecker schedulerChecker;
+    private final SchedulerHandler scheduledHandler;
 
-
-    public GitlabBot(GitlabBotProperties properties, UpdateHandler updateHandler, SchedulerChecker schedulerChecker) {
+    public GitlabBot(GitlabBotProperties properties, UpdateHandler updateHandler, SchedulerHandler scheduledHandler) {
         super(properties.botToken());
         this.properties = properties;
         this.updateHandler = updateHandler;
-        this.schedulerChecker = schedulerChecker;
+        this.scheduledHandler = scheduledHandler;
     }
 
 
@@ -55,7 +54,7 @@ public class GitlabBot extends TelegramLongPollingBot {
 
     @Scheduled(fixedRate = 5000)
     private void scheduledMessages() {
-        List<BotApiMethod> responseMessages = schedulerChecker.scheduledHandler();
+        List<BotApiMethod> responseMessages = scheduledHandler.handleSchedule();
 
         responseMessages.forEach(message -> {
             try {

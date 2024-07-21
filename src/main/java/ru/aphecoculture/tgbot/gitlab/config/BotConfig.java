@@ -11,7 +11,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.aphecoculture.ecovision.tgbot.commons.update.handler.UpdateHandler;
 import ru.aphecoculture.tgbot.gitlab.bot.GitlabBot;
 import ru.aphecoculture.tgbot.gitlab.config.properties.GitlabBotProperties;
-import ru.aphecoculture.tgbot.gitlab.handler.scheduled.SchedulerChecker;
+import ru.aphecoculture.tgbot.gitlab.sheduler.SchedulerHandler;
 
 @Configuration
 @RequiredArgsConstructor
@@ -19,11 +19,10 @@ import ru.aphecoculture.tgbot.gitlab.handler.scheduled.SchedulerChecker;
 @EnableScheduling
 public class BotConfig {
 
-    //TODO  monitoringBot?
     @Bean
-    public GitlabBot monitoringBot(UpdateHandler updateHandler, GitlabBotProperties properties, SchedulerChecker schedulerChecker) throws TelegramApiException {
+    public GitlabBot gitlabBot(UpdateHandler updateHandler, GitlabBotProperties properties, SchedulerHandler schedulerHandler) throws TelegramApiException {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        GitlabBot bot = new GitlabBot(properties, updateHandler, schedulerChecker);
+        GitlabBot bot = new GitlabBot(properties, updateHandler, schedulerHandler);
         botsApi.registerBot(bot);
         return bot;
     }

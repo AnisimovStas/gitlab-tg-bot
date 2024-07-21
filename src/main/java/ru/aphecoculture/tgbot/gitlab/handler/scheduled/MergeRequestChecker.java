@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import ru.aphecoculture.tgbot.gitlab.handler.strategy.ScheduleStrategy;
 import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
 import ru.aphecoculture.tgbot.gitlab.service.GitlabService;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @Component
 @Slf4j
-public class MergeRequestChecker implements Checker {
+public class MergeRequestChecker implements ScheduleStrategy {
 
     @Autowired
     GitlabService gitlabService;
