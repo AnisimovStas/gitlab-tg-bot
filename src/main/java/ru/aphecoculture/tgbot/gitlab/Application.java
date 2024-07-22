@@ -15,7 +15,7 @@ import java.util.List;
 
 @SpringBootApplication
 @ComponentScan("ru.aphecoculture")
-@EnableConfigurationProperties
+@EnableConfigurationProperties()
 @ConfigurationPropertiesScan("ru.aphecoculture")
 public class Application {
 

@@ -1,11 +1,13 @@
 package ru.aphecoculture.tgbot.gitlab.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.aphecoculture.tgbot.gitlab.config.properties.GitlabProperties;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class MergeRequestUtils {
 
     @Autowired
