@@ -33,8 +33,8 @@ public class Application {
             Long testGroupChatId = -1002173725195L;
             Long testFrontTopicId = 2L;
             Long testBackTopicId = 1L;
-            User frontend1 = User.builder().gitlabUsername("SergeiCN").telegramUsername("JStathem").build();
-            User frontend2 = User.builder().gitlabUsername("SAnisimov").telegramUsername("otpbard").build();
+            User frontend1 = User.builder().gitlabUsername("SergeiCN").id(10).telegramUsername("JStathem").build();
+            User frontend2 = User.builder().gitlabUsername("SAnisimov").id(17).telegramUsername("otpbard").build();
 
             GitlabProject frontend = GitlabProject.builder()
                     .id(4L)

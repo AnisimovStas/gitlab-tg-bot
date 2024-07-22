@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
+    private int id;
     private String gitlabUsername;
     private String telegramUsername;
 }

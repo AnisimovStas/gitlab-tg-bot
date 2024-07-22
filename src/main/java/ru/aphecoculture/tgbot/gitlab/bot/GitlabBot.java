@@ -52,7 +52,7 @@ public class GitlabBot extends TelegramLongPollingBot {
         });
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 500)
     private void scheduledMessages() {
         List<BotApiMethod> responseMessages = scheduledHandler.handleSchedule();
 

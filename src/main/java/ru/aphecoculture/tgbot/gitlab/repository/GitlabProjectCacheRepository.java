@@ -32,12 +32,12 @@ public class GitlabProjectCacheRepository {
         projects.put(project.getId(), project);
     }
 
-    public List<String> getUsersTelegramUsernameExceptMRCreator(Long projectId, String gitlabUsername) {
+    public List<String> getUsersTelegramUsernameExceptMRCreator(Long projectId, int gitlabUserId) {
         List<User> users = projects.get(projectId).getUsers();
         List<String> result = new ArrayList<>();
-
+ 
         for (User user : users) {
-            if (!user.getGitlabUsername().equals(gitlabUsername)) {
+            if (user.getId() != gitlabUserId) {
                 result.add(user.getTelegramUsername());
             }
         }
