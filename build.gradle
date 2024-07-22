@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.5'
+}
+
+group = 'ru.aphecoculture'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://jitpack.io"
+        content {
+            includeGroup "com.github.gitlab4j"
+        }
+    }
+    maven {
+        name = "EcovisionNexus"
+        url = uri('https://dev.ecovisio.ru/nexus/repository/maven-ecovision-private')
+        credentials {
+            username = "nx-ecovision-admin"
+            password = "7gEKRbefbYugEDFhvnJo"
+        }
+    }
+
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.telegram:telegrambots:6.9.7.1'
+
+    implementation 'com.github.gitlab4j:gitlab4j-api:6.x-SNAPSHOT'
+
+    // нужно для фикса бага связанного с gitlab4j
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+
+    implementation 'ru.aph-ecoculture.tgbot:commons:0.0.1'
+
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
