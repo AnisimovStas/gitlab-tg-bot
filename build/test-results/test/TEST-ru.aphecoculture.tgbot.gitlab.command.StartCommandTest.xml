@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.aphecoculture.tgbot.gitlab.command.StartCommandTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-07-22T10:32:19" hostname="Stanislavs-MacBook-Pro.local" time="0.345">
+  <properties/>
+  <testcase name="execute()" classname="ru.aphecoculture.tgbot.gitlab.command.StartCommandTest" time="0.34"/>
+  <testcase name="getName()" classname="ru.aphecoculture.tgbot.gitlab.command.StartCommandTest" time="0.003"/>
+  <system-out><![CDATA[
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-22T14:32:19.459+04:00  INFO 83975 --- [tgbot.gitlab] [    Test worker] r.a.t.gitlab.command.StartCommandTest    : Starting StartCommandTest using Java 21.0.3 with PID 83975 (started by stanislav in /Users/stanislav/Documents/jobs/tgbot.gitlab)
+2024-07-22T14:32:19.459+04:00  INFO 83975 --- [tgbot.gitlab] [    Test worker] r.a.t.gitlab.command.StartCommandTest    : The following 1 profile is active: "default"
+2024-07-22T14:32:19.463+04:00  INFO 83975 --- [tgbot.gitlab] [    Test worker] r.a.t.gitlab.command.StartCommandTest    : Started StartCommandTest in 0.016 seconds (process running for 2.333)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

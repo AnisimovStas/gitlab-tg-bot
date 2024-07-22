@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.aphecoculture.tgbot.gitlab.ApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-07-22T10:32:18" hostname="Stanislavs-MacBook-Pro.local" time="0.473">
+  <properties/>
+  <testcase name="contextLoads()" classname="ru.aphecoculture.tgbot.gitlab.ApplicationTests" time="0.473"/>
+  <system-out><![CDATA[Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+14:32:17.624 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [ru.aphecoculture.tgbot.gitlab.ApplicationTests]: ApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:32:17.685 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration ru.aphecoculture.tgbot.gitlab.Application for test class ru.aphecoculture.tgbot.gitlab.ApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-22T14:32:17.882+04:00  INFO 83975 --- [tgbot.gitlab] [    Test worker] r.a.tgbot.gitlab.ApplicationTests        : Starting ApplicationTests using Java 21.0.3 with PID 83975 (started by stanislav in /Users/stanislav/Documents/jobs/tgbot.gitlab)
+2024-07-22T14:32:17.882+04:00  INFO 83975 --- [tgbot.gitlab] [    Test worker] r.a.tgbot.gitlab.ApplicationTests        : The following 1 profile is active: "default"
+2024-07-22T14:32:18.251+04:00  INFO 83975 --- [tgbot.gitlab] [    Test worker] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation is not supported on static fields: static ru.aphecoculture.tgbot.gitlab.config.properties.GitlabProperties ru.aphecoculture.tgbot.gitlab.utils.MergeRequestUtils.gitlabProperties
+2024-07-22T14:32:18.955+04:00 ERROR 83975 --- [tgbot.gitlab] [   scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+java.lang.RuntimeException: null
+	at ru.aphecoculture.tgbot.gitlab.handler.scheduled.MergeRequestChecker.check(MergeRequestChecker.java:36) ~[main/:na]
+	at ru.aphecoculture.tgbot.gitlab.sheduler.SchedulerHandlerImpl.handleSchedule(SchedulerHandlerImpl.java:22) ~[main/:na]
+	at ru.aphecoculture.tgbot.gitlab.bot.GitlabBot.scheduledMessages(GitlabBot.java:57) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130) ~[spring-context-6.1.10.jar:6.1.10]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.10.jar:6.1.10]
+	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.1.jar:1.13.1]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.10.jar:6.1.10]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-6.1.10.jar:6.1.10]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2024-07-22T14:32:18.960+04:00  INFO 83975 --- [tgbot.gitlab] [    Test worker] r.a.tgbot.gitlab.ApplicationTests        : Started ApplicationTests in 1.204 seconds (process running for 1.831)
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/stanislav/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.17/e3c251a39dc90badaf71c83427ba46840f219d8d/byte-buddy-agent-1.14.17.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
