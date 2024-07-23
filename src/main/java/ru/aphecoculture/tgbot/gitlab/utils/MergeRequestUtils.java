@@ -13,7 +13,7 @@ public class MergeRequestUtils {
     @Autowired
     static GitlabProperties gitlabProperties;
 
-    MergeRequestUtils(GitlabProperties gitlabProperties) {
+    public MergeRequestUtils(GitlabProperties gitlabProperties) {
         MergeRequestUtils.gitlabProperties = gitlabProperties;
     }
 

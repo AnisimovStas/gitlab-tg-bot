@@ -17,7 +17,7 @@ public class ReportUtils {
         Map<String, List<String>> mrsMap = sortMrsByCategory(mrs);
 
         return releaseTitle + "\n \n" +
-                processReportMainSection(mrsMap, "feat", "Новый функционал", projectName) +
+                processReportMainSection(mrsMap, "feat", "Добавлено", projectName) +
                 processReportMainSection(mrsMap, "fix", "Исправлено", projectName) +
                 processReportMainSection(mrsMap, "refactor", "Улучшено", projectName) +
                 processReportMainSection(mrsMap, "others", "Прочее", projectName);
