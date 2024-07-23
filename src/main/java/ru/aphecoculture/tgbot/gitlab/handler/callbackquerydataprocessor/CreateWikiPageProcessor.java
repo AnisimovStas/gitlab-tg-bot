@@ -52,7 +52,7 @@ public class CreateWikiPageProcessor implements CallbackQueryProcessor {
 
         String pageTitle = processPageTitle(reportData.get());
         String pageContent = processPageContent(reportData.get());
-
+ 
         String link = gitlabService.createWikiPage(projectId, pageTitle, pageContent);
 
         String messageText = "Создана страница на wiki: <a href=\"%s\">%s</a>".formatted(link, pageTitle);
