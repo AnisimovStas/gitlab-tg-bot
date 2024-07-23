@@ -52,8 +52,17 @@ public class SelectProjectProcessor implements CallbackQueryProcessor {
                     .text(responseText)
                     .chatId(userId)
                     .build());
+        } else if (releaseMRs.size() == 1) {
+            responseText = ("К сожалению, я смог найти только один релизный МР: %s \n" +
+                    "Для формирования границ релиза нужно минимум 2 МРа, которые содержат слово \"release\" \n" +
+                    "Попробуйте изменить название предыдущего мра, добавив в него \"release\" или попробуйте" +
+                    " воспользоваться функционалом при формировании следующего релиза")
+                    .formatted(releaseMRs.getFirst().getTitle());
+            response.add(SendMessage.builder()
+                    .text(responseText)
+                    .chatId(userId)
+                    .build());
         } else {
-            //TODO Добавить обработку кейса если в проекте есть только 1 release mr
             responseText = ("Последний релиз: %s. Если все так, то после нажатия кнопки \"Сформировать\" " +
                     "появится отчет включающий все МРы между %s и %s").formatted(
                     releaseMRs.get(0).getTitle(), releaseMRs.get(0).getTitle(), releaseMRs.get(1).getTitle()

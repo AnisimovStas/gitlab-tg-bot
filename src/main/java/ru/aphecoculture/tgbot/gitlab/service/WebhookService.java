@@ -35,7 +35,6 @@ public class WebhookService {
                 throw new RuntimeException();
             }
 
-
             String messageContent = createMRMessageContent(project.get(), details);
 
             SendMessage message = SendMessage.builder()
@@ -44,7 +43,6 @@ public class WebhookService {
                     .text(messageContent)
                     .parseMode("html")
                     .build();
-
 
             webhookQueueRepository.add(message);
         } catch (Exception e) {
