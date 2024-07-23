@@ -7,6 +7,7 @@ import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
 import org.gitlab4j.api.models.MergeRequestFilter;
+import org.gitlab4j.api.models.WikiPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.aphecoculture.tgbot.gitlab.config.properties.GitlabProperties;
@@ -66,18 +67,34 @@ public class GitlabService {
         return gitLabApi.getMergeRequestApi().getMergeRequests(mergeRequestFilter);
     }
 
+
+    @SneakyThrows
+    private void updateMainReleaseWikiPage(GitlabProject project, String mrTitle) {
+        String mrLink = generateMrWikiPageLink(project.getName(), mrTitle);
+        WikiPage mainPage = gitLabApi.getWikisApi().getPage(project.getId(), "/Releases");
+        String modifiedMainPageContent = "<a href=\"%s\">%s</a><br>".formatted(mrLink, mrTitle) + mainPage.getContent();
+
+        gitLabApi.getWikisApi().updatePage(project.getId(), "/Releases", "Releases", modifiedMainPageContent);
+    }
+
+    private String generateMrWikiPageLink(String projectName, String mrTitle) {
+        String projectNameInLink = projectName.replaceAll("\\s", "-");
+        String titleInLink = mrTitle.replaceAll("\\s", "-");
+        return this.gitlabProperties.url() + "/" + this.gitlabProperties.instance() + "/" + projectNameInLink + "/-/wikis/Releases/" + titleInLink;
+    }
+
     @SneakyThrows
     public String createWikiPage(Long projectId, String title, String content) {
-        gitLabApi.getWikisApi().createPage(projectId, title, content);
-
         Optional<GitlabProject> project = this.getProjectById(projectId);
         if (project.isEmpty()) {
+            //TODO добавить кастомный эксепшен
             throw new RuntimeException();
         }
-        String projectNameInLink = project.get().getName().replaceAll("\\s", "-");
-        String titleInLink = title.replaceAll("\\s", "-");
 
-        return this.gitlabProperties.url() + "/" + this.gitlabProperties.instance() + "/" + projectNameInLink + "/-/wikis/" + titleInLink;
+        gitLabApi.getWikisApi().createPage(projectId, "/Releases/" + title, content);
+        updateMainReleaseWikiPage(project.get(), title);
+
+        return generateMrWikiPageLink(project.get().getName(), title);
     }
 
     @SneakyThrows
