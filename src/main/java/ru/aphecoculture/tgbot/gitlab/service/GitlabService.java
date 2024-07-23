@@ -68,19 +68,22 @@ public class GitlabService {
     }
 
 
-    @SneakyThrows
-    private void updateMainReleaseWikiPage(GitlabProject project, String mrTitle) {
+    private void updateMainReleaseWikiPage(GitlabProject project, String mrTitle) throws GitLabApiException {
         String mrLink = generateMrWikiPageLink(project.getName(), mrTitle);
-        WikiPage mainPage = gitLabApi.getWikisApi().getPage(project.getId(), "/Releases");
-        String modifiedMainPageContent = "<a href=\"%s\">%s</a><br>".formatted(mrLink, mrTitle) + mainPage.getContent();
-
-        gitLabApi.getWikisApi().updatePage(project.getId(), "/Releases", "Releases", modifiedMainPageContent);
+        WikiPage mainPage;
+        try {
+            mainPage = gitLabApi.getWikisApi().getPage(project.getId(), "/Релизы");
+            String modifiedMainPageContent = "<a href=\"%s\">%s</a><br>".formatted(mrLink, mrTitle) + mainPage.getContent();
+            gitLabApi.getWikisApi().updatePage(project.getId(), "/Релизы", "Релизы", modifiedMainPageContent);
+        } catch (GitLabApiException e) {
+            log.error(e.getMessage());
+        }
     }
 
     private String generateMrWikiPageLink(String projectName, String mrTitle) {
         String projectNameInLink = projectName.replaceAll("\\s", "-");
         String titleInLink = mrTitle.replaceAll("\\s", "-");
-        return this.gitlabProperties.url() + "/" + this.gitlabProperties.instance() + "/" + projectNameInLink + "/-/wikis/Releases/" + titleInLink;
+        return this.gitlabProperties.url() + "/" + this.gitlabProperties.instance() + "/" + projectNameInLink + "/-/wikis/Релизы/" + titleInLink;
     }
 
     @SneakyThrows
@@ -91,7 +94,7 @@ public class GitlabService {
             throw new RuntimeException();
         }
 
-        gitLabApi.getWikisApi().createPage(projectId, "/Releases/" + title, content);
+        gitLabApi.getWikisApi().createPage(projectId, "/Релизы/" + title, content);
         updateMainReleaseWikiPage(project.get(), title);
 
         return generateMrWikiPageLink(project.get().getName(), title);
