@@ -8,9 +8,8 @@ import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
 import org.gitlab4j.api.models.MergeRequestFilter;
 import org.gitlab4j.api.models.WikiPage;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.aphecoculture.tgbot.gitlab.config.properties.GitlabProperties;
 import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
 
@@ -22,17 +21,25 @@ import java.util.Optional;
 @Slf4j
 public class GitlabService {
 
-    private final GitlabProperties gitlabProperties;
-
     private final GitLabApi gitLabApi;
+    private final GitlabProjectCacheRepository projects;
+    @Value("${gitlab.url}")
+    private String gitlabURL;
+    @Value("${gitlab.token}")
+    private String gitlabToken;
+    @Value("${gitlab.instance}")
+    private String gitlabInstance;
 
-    @Autowired
-    GitlabProjectCacheRepository projects;
-
-
-    GitlabService(GitlabProperties properties) {
-        this.gitlabProperties = properties;
-        this.gitLabApi = new GitLabApi(gitlabProperties.url(), gitlabProperties.token());
+    GitlabService(
+            @Value("${gitlab.url}") String url,
+            @Value("${gitlab.token}") String token,
+            @Value("${gitlab.instance}") String instance,
+            GitlabProjectCacheRepository repository) {
+        this.gitlabURL = url;
+        this.gitlabToken = token;
+        this.gitlabInstance = instance;
+        this.projects = repository;
+        this.gitLabApi = new GitLabApi(this.gitlabURL, this.gitlabToken);
     }
 
     public List<GitlabProject> getAllProjects() {
@@ -83,7 +90,7 @@ public class GitlabService {
     String generateMrWikiPageLink(String projectName, String mrTitle) {
         String projectNameInLink = projectName.replaceAll("\\s", "-");
         String titleInLink = mrTitle.replaceAll("\\s", "-");
-        return this.gitlabProperties.url() + "/" + this.gitlabProperties.instance() + "/" + projectNameInLink + "/-/wikis/Релизы/" + titleInLink;
+        return this.gitlabURL + "/" + this.gitlabInstance + "/" + projectNameInLink + "/-/wikis/Релизы/" + titleInLink;
     }
 
     @SneakyThrows
@@ -98,18 +105,5 @@ public class GitlabService {
         updateMainReleaseWikiPage(project.get(), title);
 
         return generateMrWikiPageLink(project.get().getName(), title);
-    }
-
-    @SneakyThrows
-    public MergeRequest getLastCreatedMergeRequest(Long projectId) {
-        log.info("fetching last created mrs for projectId: {}", projectId);
-        MergeRequestFilter mergeRequestFilter = new MergeRequestFilter();
-        mergeRequestFilter.setProjectId(projectId);
-        mergeRequestFilter.setState(Constants.MergeRequestState.OPENED);
-        List<MergeRequest> mrs = gitLabApi.getMergeRequestApi().getMergeRequests(mergeRequestFilter, 1).all();
-        if (mrs.isEmpty()) {
-            return null;
-        }
-        return mrs.getFirst();
     }
 }
