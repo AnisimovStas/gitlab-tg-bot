@@ -2,6 +2,7 @@ package ru.aphecoculture.tgbot.gitlab.model;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Getter
@@ -14,6 +15,7 @@ public class WebhookMRDetails {
     private ObjectAttributes object_attributes;
 
     @Data
+    @SuperBuilder
     public static class User {
         private int id;
         private String name;
@@ -23,6 +25,7 @@ public class WebhookMRDetails {
     }
 
     @Data
+    @SuperBuilder
     public static class Project {
         private Long id;
         private String name;
@@ -50,6 +53,7 @@ public class WebhookMRDetails {
     }
 
     @Data
+    @SuperBuilder
     public static class ObjectAttributes {
         private int id;
         private Long iid;
@@ -134,6 +138,7 @@ public class WebhookMRDetails {
     }
 
     @Data
+    @SuperBuilder
     public static class Author {
         private String name;
         private String email;

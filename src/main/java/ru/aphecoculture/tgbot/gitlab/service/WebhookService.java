@@ -52,7 +52,7 @@ public class WebhookService {
         }
     }
 
-    private String createMRMessageContent(GitlabProject project, WebhookMRDetails details) {
+    String createMRMessageContent(GitlabProject project, WebhookMRDetails details) {
         int authorId = details.getObject_attributes().getAuthor_id();
         String mrTitle = details.getObject_attributes().getTitle();
         String mrURL = details.getObject_attributes().getUrl();
