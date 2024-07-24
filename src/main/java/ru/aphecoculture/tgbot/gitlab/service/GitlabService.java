@@ -68,7 +68,7 @@ public class GitlabService {
     }
 
 
-    private void updateMainReleaseWikiPage(GitlabProject project, String mrTitle) throws GitLabApiException {
+    void updateMainReleaseWikiPage(GitlabProject project, String mrTitle) throws GitLabApiException {
         String mrLink = generateMrWikiPageLink(project.getName(), mrTitle);
         WikiPage mainPage;
         try {
@@ -80,7 +80,7 @@ public class GitlabService {
         }
     }
 
-    private String generateMrWikiPageLink(String projectName, String mrTitle) {
+    String generateMrWikiPageLink(String projectName, String mrTitle) {
         String projectNameInLink = projectName.replaceAll("\\s", "-");
         String titleInLink = mrTitle.replaceAll("\\s", "-");
         return this.gitlabProperties.url() + "/" + this.gitlabProperties.instance() + "/" + projectNameInLink + "/-/wikis/Релизы/" + titleInLink;
