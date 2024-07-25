@@ -8,10 +8,17 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - gitlab-bot.bot-token=${secrets.BOT_TOKEN}
-      - gitlab-bot.bot-name=${secrets.BOT_NAME}
-      - gitlab.url=${secrets.GITLAB_URL}
-      - gitlab.token=${secrets.GITLAB_TOKEN}
-      - gitlab.instance=${secrets.GITLAB_INSTANCE}
-      - nexus.username=${secrets.NEXUS_USERNAME}
-      - nexus.password=${secrets.NEXUS_PASSWORD}
+      #      - gitlab-bot.bot-token=${secrets.BOT_TOKEN}
+      - gitlab-bot.bot-token=7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
+      #      - gitlab-bot.bot-name=${secrets.BOT_NAME}
+      - gitlab-bot.bot-name=EcovisionBot
+      #      - gitlab.url=${secrets.GITLAB_URL}
+      - gitlab.url=https://dev1.apheco.ru
+      #      - gitlab.token=${secrets.GITLAB_TOKEN}
+      - gitlab.token=glpat-5kF1S3UQfAVAtBJMD5uR
+      #      - gitlab.instance=${secrets.GITLAB_INSTANCE}
+      - gitlab.instance=gitlab-instance-4f4a9c0a
+      #      - nexus.username=${secrets.NEXUS_USERNAME}
+      - nexus.username=nx-ecovision-admin
+      #      - nexus.password=${secrets.NEXUS_PASSWORD}
+      - nexus.password=7gEKRbefbYugEDFhvnJo
