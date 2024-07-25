@@ -8,10 +8,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - GITLAB-BOT.BOT-TOKEN=${BOT_TOKEN}
-      - GITLAB-BOT.BOT-NAME=${BOT_NAME}
-      - GITLAB.URL=${GITLAB_URL}
-      - GITLAB.TOKEN=${GITLAB_TOKEN}
-      - GITLAB.INSTANCE=${GITLAB_INSTANCE}
-      - NEXUS.USERNAME=${NEXUS_USERNAME}
-      - NEXUS.PASSWORD=${NEXUS_PASSWORD}
+      - gitlab-bot.bot-token=${BOT_TOKEN}
+      - gitlab-bot.bot-name=${BOT_NAME}
+      - gitlab.url=${GITLAB_URL}
+      - gitlab.token=${GITLAB_TOKEN}
+      - gitlab.instance=${GITLAB_INSTANCE}
+      - nexus.username=${NEXUS_USERNAME}
+      - nexus.password=${NEXUS_PASSWORD}
