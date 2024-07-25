@@ -10,7 +10,7 @@ public class WebhookMRDetails {
     private String event_type;
     private Project project;
     private ObjectAttributes object_attributes;
-
+ 
 
     @Data
     @SuperBuilder
