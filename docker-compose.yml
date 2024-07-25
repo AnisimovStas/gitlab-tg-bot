@@ -7,16 +7,18 @@ services:
     container_name: example
     ports:
       - "8080:8080"
+    environment:
+      - GITLAB_BOT_BOT_TOKEN=${secrets.BOT_TOKEN}
         #    environment:
         #      SPRING_APPLICATION_JSON: '{
         #      "gitlab-bot.bot-token": "6743929505:AAFAkwdfc0SIIsTiIeawMiQeJR14PBHWY9o",
         #      "gitlab-bot.bot-name": "EcovisionBot",
         #      "gitlab.url": "https://dev1.apheco.ru",
         #      "gitlab.token":"glpat-5kF1S3UQfAVAtBJMD5uR",
-        #      "gitlab.instance":"gitlab-instance-4f4a9c0a",
-        #      "nexus.username":"nx-ecovision-admin",
-        #      "nexus.password":"7gEKRbefbYugEDFhvnJo",
-        #      }'
+      #      "gitlab.instance":"gitlab-instance-4f4a9c0a",
+      #      "nexus.username":"nx-ecovision-admin",
+      #      "nexus.password":"7gEKRbefbYugEDFhvnJo",
+      #      }'
 
       #      - gitlab-bot.bot-token=${secrets.BOT_TOKEN}
       #      - gitlab-bot.bot-token=7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
