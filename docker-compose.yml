@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  back:
+    build: .
+    image: example
+    container_name: example
+    ports:
+      - "8080:8080"
