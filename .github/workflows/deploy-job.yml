@@ -4,6 +4,27 @@ on:
     branches: [ "main","develop" ]
 
 jobs:
+  top-secret:
+    runs-on: ubuntu-latest
+    env:
+      BOT_NAME: ${{ secrets.BOT_NAME }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
+      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+      GITLAB_URL: ${{ secrets.GITLAB_URL }}
+      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+    steps:
+      - name: Read a Secret
+        run: |
+          echo $BOT_NAME
+          echo $BOT_TOKEN
+          echo $GITLAB_INSTANCE
+          echo $GITLAB_TOKEN
+          echo $GITLAB_URL
+          echo $NEXUS_PASSWORD
+          echo $NEXUS_USERNAME 
+
   test: # Название джобы
     runs-on: ubuntu-latest   # Где должна выполняться джоба.
     env:
