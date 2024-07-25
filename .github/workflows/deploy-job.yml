@@ -9,7 +9,7 @@ jobs:
     # Здесь укажем GitHub-hosted runner - среду выполнения, которую предоставляет сам GitHub.
     steps: # Перечень шагов, которые необходимо выполнить в рамках джобы.
       - name: cd into repo # Название шага
-        uses: actions/checkout@v3 # Ключевое слово uses используется для запуска заранее
+        uses: actions/checkout@v4 # Ключевое слово uses используется для запуска заранее
       # созданного набора команд. В данном случае используем дефолтную команду
       # для обновления проекта до последнего коммита.
       - name: set up Java and Gradle # Настраиваем Java и Gradle.
@@ -44,6 +44,6 @@ jobs:
     needs: prepare-environment
     steps:
       - name: checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: docker-compose
         run: docker-compose up -d
