@@ -3,7 +3,7 @@ spring:
     name: tgbot.gitlab
 
 gitlab-bot:
-  bot-token: 6743929505:AAFAkwdfc0SIIsTiIeawMiQeJR14PBHWY9o
+  bot-token: 7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
   bot-name: EcovisionBot
 gitlab:
   url: https://dev1.apheco.ru
