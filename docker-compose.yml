@@ -7,3 +7,11 @@ services:
     container_name: example
     ports:
       - "8080:8080"
+    environment:
+      - GITLAB-BOT.BOT-TOKEN=${BOT-TOKEN}
+      - GITLAB-BOT.BOT-NAME=${BOT-NAME}
+      - GITLAB.URL=${GITLAB-URL}
+      - GITLAB.TOKEN=${GITLAB-TOKEN}
+      - GITLAB.INSTANCE=${GITLAB-INSTANCE}
+      - NEXUS.USERNAME=${NEXUS-USERNAME}
+      - NEXUS.PASSWORD=${NEXUS-PASSWORD}

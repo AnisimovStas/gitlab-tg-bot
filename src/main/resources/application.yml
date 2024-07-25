@@ -1,13 +1,5 @@
 spring:
+  config:
+    import: optional:local.secrets.yml
   application:
     name: tgbot.gitlab
-
-gitlab-bot:
-  bot-token: 7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
-  bot-name: gitlabEcovisionDevBot
-
-gitlab:
-  url: https://dev1.apheco.ru
-  # expires 2025-07-16
-  token: glpat-5kF1S3UQfAVAtBJMD5uR
-  instance: gitlab-instance-4f4a9c0a

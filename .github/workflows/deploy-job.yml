@@ -13,6 +13,14 @@ jobs:
       # созданного набора команд. В данном случае используем дефолтную команду
       # для обновления проекта до последнего коммита.
       - name: set up Java and Gradle # Настраиваем Java и Gradle.
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_URL: ${{ secrets.GITLAB_URL }}
+          GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          BOT_NAME: ${{ secrets.BOT_NAME }}
         uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -46,4 +54,12 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v4
       - name: docker-compose
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_URL: ${{ secrets.GITLAB_URL }}
+          GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          BOT_NAME: ${{ secrets.BOT_NAME }}
         run: docker-compose up -d
