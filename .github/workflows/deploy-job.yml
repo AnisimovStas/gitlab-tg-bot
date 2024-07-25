@@ -17,7 +17,6 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           cache: gradle
       - name: install Gradle if not installed
         run: |
@@ -27,6 +26,8 @@ jobs:
             sdk install gradle 7.4.2
           fi
       - name: run tests
+        with:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: ./gradlew test # Запускаем тесты с помощью Gradle.
 
   prepare-environment:
