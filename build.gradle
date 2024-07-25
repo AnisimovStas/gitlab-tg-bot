@@ -31,8 +31,8 @@ repositories {
         name = "EcovisionNexus"
         url = uri('https://dev.ecovisio.ru/nexus/repository/maven-ecovision-private')
         credentials {
-            username = System.getenv("NEXUS.USERNAME")
-            password = System.getenv("NEXUS.PASSWORD")
+            username = "nx-ecovision-admin"
+            password = "7gEKRbefbYugEDFhvnJo"
         }
     }
 
