@@ -1,0 +1,46 @@
+name: gitlab tg bot runner
+on:
+  push:
+    branches: [ "main","develop" ]
+
+jobs:
+  test: # Название джобы
+    runs-on: ubuntu-latest   # Где должна выполняться джоба.
+    # Здесь укажем GitHub-hosted runner - среду выполнения, которую предоставляет сам GitHub.
+    steps: # Перечень шагов, которые необходимо выполнить в рамках джобы.
+      - name: cd into repo # Название шага
+        uses: actions/checkout@v3# Ключевое слово uses используется для запуска заранее
+      # созданного набора команд. В данном случае используем дефолтную команду
+      # для обновления проекта до последнего коммита.
+      - name: set up Java and Gradle # Настраиваем Java и Gradle.
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: gradle
+      - name: install Gradle if not installed
+        run: |
+          if ! command -v gradle &> /dev/null; then
+            curl -s https://get.sdkman.io | bash
+            source "$HOME/.sdkman/bin/sdkman-init.sh"
+            sdk install gradle 7.4.2
+          fi
+      - name: run tests
+        run: ./gradlew test # Запускаем тесты с помощью Gradle.
+
+  prepare-environment:
+    runs-on: self-hosted # Запускаем на раннере, который настроили до этого.
+    needs: test # Запускаем только если джоба test прошла успешно
+    steps:
+      - name: Stop and remove containers, networks
+        run: docker-compose down
+      - name: Remove unused data
+        run: docker system prune -a -f
+  deploy:
+    runs-on: self-hosted
+    needs: prepare-environment
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: docker-compose
+        run: docker-compose up -d
