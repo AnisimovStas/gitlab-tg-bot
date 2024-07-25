@@ -6,6 +6,14 @@ on:
 jobs:
   test: # Название джобы
     runs-on: ubuntu-latest   # Где должна выполняться джоба.
+    env:
+      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+      GITLAB_URL: ${{ secrets.GITLAB_URL }}
+      GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
+      NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      BOT_NAME: ${{ secrets.BOT_NAME }}
     # Здесь укажем GitHub-hosted runner - среду выполнения, которую предоставляет сам GitHub.
     steps: # Перечень шагов, которые необходимо выполнить в рамках джобы.
       - name: cd into repo # Название шага
@@ -13,14 +21,6 @@ jobs:
       # созданного набора команд. В данном случае используем дефолтную команду
       # для обновления проекта до последнего коммита.
       - name: set up Java and Gradle # Настраиваем Java и Gradle.
-        env:
-          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-          GITLAB_URL: ${{ secrets.GITLAB_URL }}
-          GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          BOT_NAME: ${{ secrets.BOT_NAME }}
         uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -49,17 +49,17 @@ jobs:
         run: docker system prune -a -f
   deploy:
     runs-on: self-hosted
+    env:
+      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+      GITLAB_URL: ${{ secrets.GITLAB_URL }}
+      GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
+      NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      BOT_NAME: ${{ secrets.BOT_NAME }}
     needs: prepare-environment
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
       - name: docker-compose
-        env:
-          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-          GITLAB_URL: ${{ secrets.GITLAB_URL }}
-          GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          BOT_NAME: ${{ secrets.BOT_NAME }}
         run: docker-compose up -d
