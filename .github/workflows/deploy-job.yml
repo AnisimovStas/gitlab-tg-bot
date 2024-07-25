@@ -17,6 +17,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           cache: gradle
       - name: install Gradle if not installed
         run: |

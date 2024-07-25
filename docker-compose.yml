@@ -8,11 +8,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - GITLAB_BOT_BOT_TOKEN=${{ secrets.BOT_TOKEN }}
+      - GITLAB_BOT_BOT_TOKEN=${BOT_TOKEN}
         #    environment:
         #      SPRING_APPLICATION_JSON: '{
-        #      "gitlab-bot.bot-token": "6743929505:AAFAkwdfc0SIIsTiIeawMiQeJR14PBHWY9o",
-        #      "gitlab-bot.bot-name": "EcovisionBot",
+      #      "gitlab-bot.bot-token": "6743929505:AAFAkwdfc0SIIsTiIeawMiQeJR14PBHWY9o",
+      #      "gitlab-bot.bot-name": "EcovisionBot",
       #      "gitlab.url": "https://dev1.apheco.ru",
       #      "gitlab.token":"glpat-5kF1S3UQfAVAtBJMD5uR",
       #      "gitlab.instance":"gitlab-instance-4f4a9c0a",
