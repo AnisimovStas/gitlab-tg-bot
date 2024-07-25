@@ -17,13 +17,13 @@ jobs:
     steps:
       - name: Read a Secret
         run: |
-          echo $BOT_NAME
-          echo $BOT_TOKEN
-          echo $GITLAB_INSTANCE
-          echo $GITLAB_TOKEN
-          echo $GITLAB_URL
-          echo $NEXUS_PASSWORD
-          echo $NEXUS_USERNAME 
+          echo "my secret is ${{ secrets.BOT_TOKEN }}"
+          echo "my secret is ${{ secrets.BOT_NAME }}"
+          echo "my secret is ${{ secrets.GITLAB_INSTANCE }}"
+          echo "my secret is ${{ secrets.GITLAB_TOKEN }}"
+          echo "my secret is ${{ secrets.GITLAB_URL }}"
+          echo "my secret is ${{ secrets.NEXUS_PASSWORD }}"
+          echo "my secret is ${{ secrets.NEXUS_USERNAME }}" 
 
   test: # Название джобы
     runs-on: ubuntu-latest   # Где должна выполняться джоба.
