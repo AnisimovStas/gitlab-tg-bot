@@ -26,8 +26,6 @@ jobs:
             sdk install gradle 7.4.2
           fi
       - name: run tests
-        env:
-          BOT_TOKEN: ${{ vars.BOT_TOKEN }}
         run: ./gradlew test # Запускаем тесты с помощью Gradle.
 
   prepare-environment:
