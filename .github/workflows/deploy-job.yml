@@ -27,7 +27,7 @@ jobs:
           fi
       - name: run tests
         env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          BOT_TOKEN: ${{ vars.BOT_TOKEN }}
         run: ./gradlew test # Запускаем тесты с помощью Gradle.
 
   prepare-environment:
