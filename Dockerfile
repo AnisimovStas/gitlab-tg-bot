@@ -14,7 +14,7 @@ RUN gradle build
 FROM gradle:7-jdk21
 
 # Копируем файлы проекта из контейнера сборки
-COPY --from=build /app/build/libs/app.jar /app/app.jar
+COPY --from=build /app/build/libs/tgbot.gitlab-0.0.1-SNAPSHOT.jar /app/app.jar
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
