@@ -22,7 +22,7 @@ public class GitlabController {
     void processWebhook(@RequestBody WebhookMRDetails details) {
         log.info("get new webhook event");
         String webhookEventType = details.getEvent_type();
-
+ 
         if (webhookEventType.equals("merge_request")) {
             String mrState = details.getObject_attributes().getState();
             log.info("get new webhook merge request event");
