@@ -33,7 +33,10 @@ jobs:
     needs: test # Запускаем только если джоба test прошла успешно
     steps:
       - name: Stop and remove containers, networks
-        run: docker-compose down
+        run: |
+          if [ -f docker-compose.yml ]; then
+            docker-compose down
+          fi
       - name: Remove unused data
         run: docker system prune -a -f
   deploy:
