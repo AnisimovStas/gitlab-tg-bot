@@ -4,37 +4,8 @@ on:
     branches: [ "main","develop" ]
 
 jobs:
-  top-secret:
-    runs-on: ubuntu-latest
-    env:
-      BOT_NAME: ${{ secrets.BOT_NAME }}
-      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-      GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
-      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-      GITLAB_URL: ${{ secrets.GITLAB_URL }}
-      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-      NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-    steps:
-      - name: Read a Secret
-        run: |
-          echo "my secret is ${{ secrets.BOT_TOKEN }}"
-          echo "my secret is ${{ secrets.BOT_NAME }}"
-          echo "my secret is ${{ secrets.GITLAB_INSTANCE }}"
-          echo "my secret is ${{ secrets.GITLAB_TOKEN }}"
-          echo "my secret is ${{ secrets.GITLAB_URL }}"
-          echo "my secret is ${{ secrets.NEXUS_PASSWORD }}"
-          echo "my secret is ${{ secrets.NEXUS_USERNAME }}" 
-
   test: # Название джобы
     runs-on: ubuntu-latest   # Где должна выполняться джоба.
-    env:
-      BOT_NAME: ${{ secrets.BOT_NAME }}
-      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-      GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
-      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-      GITLAB_URL: ${{ secrets.GITLAB_URL }}
-      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-      NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
     # Здесь укажем GitHub-hosted runner - среду выполнения, которую предоставляет сам GitHub.
     steps: # Перечень шагов, которые необходимо выполнить в рамках джобы.
       - name: cd into repo # Название шага
@@ -70,14 +41,6 @@ jobs:
         run: docker system prune -a -f
   deploy:
     runs-on: self-hosted
-    env:
-      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-      GITLAB_URL: ${{ secrets.GITLAB_URL }}
-      GITLAB_INSTANCE: ${{ secrets.GITLAB_INSTANCE }}
-      NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-      BOT_NAME: ${{ secrets.BOT_NAME }}
     needs: prepare-environment
     steps:
       - name: checkout repo
