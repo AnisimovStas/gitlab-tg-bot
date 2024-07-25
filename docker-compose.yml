@@ -3,13 +3,13 @@ version: '3.7'
 services:
   back:
     build: .
-    image: example
-    container_name: example
+    image: gitlab-bot
+    container_name: gitlab-bot
     ports:
       - "8080:8080"
-    environment:
-      - GITLAB_BOT_BOT_TOKEN=7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
-        #    environment:
+      #    environment:
+      #      - TOKEN=7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
+      #    environment:
       #      SPRING_APPLICATION_JSON: '{
       #      "gitlab-bot.bot-token": "6743929505:AAFAkwdfc0SIIsTiIeawMiQeJR14PBHWY9o",
       #      "gitlab-bot.bot-name": "EcovisionBot",
@@ -19,9 +19,9 @@ services:
       #      "nexus.username":"nx-ecovision-admin",
       #      "nexus.password":"7gEKRbefbYugEDFhvnJo",
       #      }'
-
-      #      - gitlab-bot.bot-token=${secrets.BOT_TOKEN}
-      #      - gitlab-bot.bot-token=7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
+    #    environment:
+    #      - gitlab-bot.bot-token=${secrets.BOT_TOKEN}
+    #      - gitlab-bot.bot-token=7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
 #        - gitlab-bot.bot-token=6743929505:AAFAkwdfc0SIIsTiIeawMiQeJR14PBHWY9o
 #        #      - gitlab-bot.bot-name=${secrets.BOT_NAME}
 #        - gitlab-bot.bot-name=EcovisionBot
