@@ -8,6 +8,8 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.aphecoculture.tgbot.gitlab.BaseSuiteTest;
+import ru.aphecoculture.tgbot.gitlab.exception.GitlabProjectException;
+import ru.aphecoculture.tgbot.gitlab.exception.ReportException;
 import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
 import ru.aphecoculture.tgbot.gitlab.repository.ReportRepository;
 import ru.aphecoculture.tgbot.gitlab.utils.TestUtils;
@@ -42,7 +44,7 @@ class SendMessageToGroupProcessorTest {
     }
 
     @Test
-    void processCallbackQuery() {
+    void processCallbackQuery() throws ReportException, GitlabProjectException {
         CallbackQuery callbackQuery = BaseSuiteTest.mockCallbackQuery(CALLBACK_DATA);
         Long projectId = 1L;
         int reportId = 1;

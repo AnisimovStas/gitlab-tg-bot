@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.aphecoculture.tgbot.gitlab.BaseSuiteTest;
+import ru.aphecoculture.tgbot.gitlab.exception.ReportException;
 import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
 import ru.aphecoculture.tgbot.gitlab.repository.ReportRepository;
 import ru.aphecoculture.tgbot.gitlab.service.GitlabService;
@@ -42,7 +43,7 @@ class CreateWikiPageProcessorTest {
     }
 
     @Test
-    void processCallbackQuery() {
+    void processCallbackQuery() throws ReportException {
         CallbackQuery callbackQuery = BaseSuiteTest.mockCallbackQuery(CALLBACK_DATA);
 
         int reportId = 1;
