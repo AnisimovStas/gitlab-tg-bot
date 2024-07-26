@@ -18,12 +18,16 @@ public class WebhookMRDetails {
 
 
     @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     @SuperBuilder
     public static class Project {
         private Long id;
     }
 
     @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     @SuperBuilder
     public static class ObjectAttributes {
         private int id;
@@ -41,6 +45,8 @@ public class WebhookMRDetails {
 
 
     @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     @SuperBuilder
     public static class Author {
         private String name;
