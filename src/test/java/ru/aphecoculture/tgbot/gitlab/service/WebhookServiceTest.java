@@ -27,14 +27,18 @@ class WebhookServiceTest {
 
     @MockBean
     GitlabProjectCacheRepository projectRepository;
-     
+
     @Test
     void testAddMRToQueue_Success() {
-        WebhookMRDetails details = new WebhookMRDetails();
-        details.setProject(WebhookMRDetails.Project.builder().id(1L).build());
-        details.setObject_attributes(WebhookMRDetails.ObjectAttributes.builder()
-                .author_id(1).title("MR Title").url("https://example.com/mr").build());
-
+        WebhookMRDetails details = WebhookMRDetails
+                .builder()
+                .project(WebhookMRDetails.Project.builder().id(1L).build())
+                .object_attributes(
+                        WebhookMRDetails.ObjectAttributes.builder()
+                                .author_id(1).title("MR Title").url("https://example.com/mr").build()
+                )
+                .build();
+ 
         GitlabProject project = TestUtils.projectStub();
 
         when(projectRepository.getById(1L)).thenReturn(Optional.of(project));
