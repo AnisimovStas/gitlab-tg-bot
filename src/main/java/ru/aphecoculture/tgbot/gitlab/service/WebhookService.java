@@ -3,10 +3,10 @@ package ru.aphecoculture.tgbot.gitlab.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import ru.aphecoculture.tgbot.gitlab.exception.GitlabProjectException;
+import ru.aphecoculture.tgbot.gitlab.exception.WebhookException;
 import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.model.WebhookMRDetails;
 import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
@@ -32,7 +32,7 @@ public class WebhookService {
             Optional<GitlabProject> project = projectRepository.getById(projectId);
 
             if (project.isEmpty()) {
-                throw new RuntimeException();
+                throw new GitlabProjectException(GitlabProjectException.PROJECT_NOT_FOUND);
             }
 
             String messageContent = createMRMessageContent(project.get(), details);
@@ -48,7 +48,7 @@ public class WebhookService {
         } catch (Exception e) {
             log.error("Error during addMRToQueue() in WebhookService: {}", e.getMessage());
             //400 because 500 errors not allowed for gitlab webhooks
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during addMRToQueue() in WebhookService: %s".formatted(e.getMessage()));
+            throw new WebhookException("Ошибка во время исполнения addMRToQueue() в WebhookService: %s".formatted(e.getMessage()));
         }
     }
 

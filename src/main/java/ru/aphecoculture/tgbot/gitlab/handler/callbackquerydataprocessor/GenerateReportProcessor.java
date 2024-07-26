@@ -12,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.aphecoculture.ecovision.tgbot.commons.callbackquery.CallbackQueryProcessor;
+import ru.aphecoculture.tgbot.gitlab.exception.GitlabProjectException;
 import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.service.GitlabService;
 import ru.aphecoculture.tgbot.gitlab.service.ReportService;
@@ -21,6 +22,8 @@ import ru.aphecoculture.tgbot.gitlab.utils.ReportUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static ru.aphecoculture.tgbot.gitlab.exception.GitlabProjectException.PROJECT_NOT_FOUND;
 
 @Component
 @RequiredArgsConstructor
@@ -52,10 +55,9 @@ public class GenerateReportProcessor implements CallbackQueryProcessor {
         Optional<GitlabProject> project = gitlabService.getProjectById(projectId);
 
         if (project.isEmpty()) {
-            //TODO Убрать RuntimeException
-            throw new RuntimeException();
+            throw new GitlabProjectException(PROJECT_NOT_FOUND);
         }
- 
+
         String reportData = ReportUtils.processMrListToReport(releaseMrs, project.get().getName());
 
         Integer reportId = reportService.addReport(reportData);

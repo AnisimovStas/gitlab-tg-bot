@@ -10,6 +10,7 @@ import org.gitlab4j.api.models.MergeRequestFilter;
 import org.gitlab4j.api.models.WikiPage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.aphecoculture.tgbot.gitlab.exception.GitlabProjectException;
 import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
 
@@ -97,8 +98,7 @@ public class GitlabService {
     public String createWikiPage(Long projectId, String title, String content) {
         Optional<GitlabProject> project = this.getProjectById(projectId);
         if (project.isEmpty()) {
-            //TODO добавить кастомный эксепшен
-            throw new RuntimeException();
+            throw new GitlabProjectException(GitlabProjectException.PROJECT_NOT_FOUND);
         }
 
         gitLabApi.getWikisApi().createPage(projectId, "/Релизы/" + title, content);

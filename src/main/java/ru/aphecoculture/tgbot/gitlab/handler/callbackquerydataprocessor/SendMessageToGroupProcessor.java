@@ -6,6 +6,8 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.aphecoculture.ecovision.tgbot.commons.callbackquery.CallbackQueryProcessor;
+import ru.aphecoculture.tgbot.gitlab.exception.GitlabProjectException;
+import ru.aphecoculture.tgbot.gitlab.exception.ReportException;
 import ru.aphecoculture.tgbot.gitlab.model.GitlabProject;
 import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
 import ru.aphecoculture.tgbot.gitlab.repository.ReportRepository;
@@ -30,7 +32,7 @@ public class SendMessageToGroupProcessor implements CallbackQueryProcessor {
 
 
     @Override
-    public List<BotApiMethod> processCallbackQuery(CallbackQuery callbackQuery) {
+    public List<BotApiMethod> processCallbackQuery(CallbackQuery callbackQuery) throws GitlabProjectException, ReportException {
         Long userId = callbackQuery.getFrom().getId();
         String data = callbackQuery.getData();
 
@@ -38,8 +40,7 @@ public class SendMessageToGroupProcessor implements CallbackQueryProcessor {
         Optional<GitlabProject> project = projectCacheRepository.getById(projectId);
 
         if (project.isEmpty()) {
-            //TODO Убрать RuntimeException
-            throw new RuntimeException();
+            throw new GitlabProjectException(GitlabProjectException.PROJECT_NOT_FOUND);
         }
 
         Long topicId = project.get().getTopicId();
@@ -50,7 +51,7 @@ public class SendMessageToGroupProcessor implements CallbackQueryProcessor {
         Optional<String> reportData = reportRepository.getById(reportId);
 
         if (reportData.isEmpty()) {
-            throw new RuntimeException();
+            throw new ReportException(ReportException.REPORT_NOT_FOUND);
         }
 
         SendMessage messageToGroup = SendMessage.builder()

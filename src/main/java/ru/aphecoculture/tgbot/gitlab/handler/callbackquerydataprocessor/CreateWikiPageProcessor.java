@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.aphecoculture.ecovision.tgbot.commons.callbackquery.CallbackQueryProcessor;
+import ru.aphecoculture.tgbot.gitlab.exception.ReportException;
 import ru.aphecoculture.tgbot.gitlab.repository.GitlabProjectCacheRepository;
 import ru.aphecoculture.tgbot.gitlab.repository.ReportRepository;
 import ru.aphecoculture.tgbot.gitlab.service.GitlabService;
@@ -39,20 +40,19 @@ public class CreateWikiPageProcessor implements CallbackQueryProcessor {
     }
 
     @Override
-    public List<BotApiMethod> processCallbackQuery(CallbackQuery callbackQuery) {
+    public List<BotApiMethod> processCallbackQuery(CallbackQuery callbackQuery) throws ReportException {
         Long userId = callbackQuery.getFrom().getId();
         String data = callbackQuery.getData();
         Long projectId = CallbackDataUtils.getProjectIdFromCallback(data);
         Integer reportId = CallbackDataUtils.getReportIdFromCallback(data);
         Optional<String> reportData = reportRepository.getById(reportId);
         if (reportData.isEmpty()) {
-            //TODO Убрать RuntimeException
-            throw new RuntimeException();
+            throw new ReportException(ReportException.REPORT_NOT_FOUND);
         }
 
         String pageTitle = processPageTitle(reportData.get());
         String pageContent = processPageContent(reportData.get());
- 
+
         String link = gitlabService.createWikiPage(projectId, pageTitle, pageContent);
 
         String messageText = "Создана страница на wiki: <a href=\"%s\">%s</a>".formatted(link, pageTitle);

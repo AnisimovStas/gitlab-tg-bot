@@ -16,11 +16,14 @@ import java.util.List;
 public class StartCommand implements Command {
 
     public static final String START_COMMAND = "/start";
-    //TODO написать нормальный интро текст
     public static final String INTRO = """
             Привет!
                         
             Я бот который упрощает разработчикам взаимодействие с gitlab!  
+                        
+            На текущий момент, у меня 2 основных функционала:
+            • Создавать сообщения о релизах с возможностью отправлять их в нужный тг чат и добавлять в gitlab wiki
+            • В фоновом режиме отслеживать новые merge request и информировать о них в тг чат         
             """;
 
 
