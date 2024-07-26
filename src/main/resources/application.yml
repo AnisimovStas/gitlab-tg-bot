@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: tgbot.gitlab
+
+gitlab-bot:
+  bot-name: EcovisionBot
+  bot-token: 7468783459:AAEOrE-Ghgy_uLXYU4d41y_PRFnpcCtmzLw
+
+gitlab:
+  url: https://dev1.apheco.ru
+  token: glpat-5kF1S3UQfAVAtBJMD5uR
+  instance: gitlab-instance-4f4a9c0a
+
+  nexus:
+    username: nx-ecovision-admin
+    password: 7gEKRbefbYugEDFhvnJo
+
