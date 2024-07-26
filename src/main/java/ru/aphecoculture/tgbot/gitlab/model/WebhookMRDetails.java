@@ -42,8 +42,7 @@ public class WebhookMRDetails {
         //        private String merge_status;
         private String url;
     }
-
-
+     
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
