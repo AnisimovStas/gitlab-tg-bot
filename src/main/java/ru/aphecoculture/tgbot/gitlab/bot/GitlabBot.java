@@ -21,7 +21,7 @@ public class GitlabBot extends TelegramLongPollingBot {
     private final GitlabBotProperties properties;
     private final UpdateHandler updateHandler;
     private final SchedulerHandler scheduledHandler;
-
+ 
     public GitlabBot(GitlabBotProperties properties, UpdateHandler updateHandler, SchedulerHandler scheduledHandler) {
         super(properties.botToken());
         this.properties = properties;
