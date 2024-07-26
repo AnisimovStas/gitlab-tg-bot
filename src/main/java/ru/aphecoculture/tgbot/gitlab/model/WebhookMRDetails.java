@@ -1,12 +1,14 @@
 package ru.aphecoculture.tgbot.gitlab.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @Getter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 public class WebhookMRDetails {
